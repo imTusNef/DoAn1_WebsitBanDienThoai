@@ -1,0 +1,7 @@
+# Hướng dẫn kết nối database
+
+1. Mở SQL Server Management Studio (SSMS)
+2. Chuột phải vào Databases → Attach...
+3. Chọn file `Database_PhoneStore --> PhoneStore.mdf`
+4. Nếu thiếu file log, remove rồi OK
+5. Sau khi attach, database sẽ có tên là `PhoneStore`
