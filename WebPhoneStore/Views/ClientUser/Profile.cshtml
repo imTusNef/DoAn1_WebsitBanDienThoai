@@ -1,0 +1,53 @@
+﻿@model WebPhoneStore.EF.User
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg rounded">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fa fa-user-circle"></i> Thông tin cá nhân</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Tên đăng nhập:</div>
+                        <div class="col-sm-8">@Model.UserName</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Họ tên:</div>
+                        <div class="col-sm-8">@Model.FullName</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Email:</div>
+                        <div class="col-sm-8">@Model.Email</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Số điện thoại:</div>
+                        <div class="col-sm-8">@Model.Phone</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold">Địa chỉ:</div>
+                        <div class="col-sm-8">@Model.Address</div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="@Url.Action("EditProfile", "ClientUser")" class="btn btn-success mr-2">
+                        <i class="fa fa-edit"></i> Cập nhật hồ sơ
+                    </a>
+                    <a href="@Url.Action("Logout", "ClientUser")" class="btn btn-danger">
+                        <i class="fa fa-sign-out-alt"></i> Đăng xuất
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

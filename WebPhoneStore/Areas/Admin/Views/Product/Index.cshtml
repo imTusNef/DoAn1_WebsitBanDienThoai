@@ -1,0 +1,72 @@
+﻿@model PagedList.IPagedList<WebPhoneStore.EF.Product>
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h2>Danh Sách Sản Phẩm</h2>
+
+    @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-4">
+                    <input type="text" value="@ViewBag.SearchString" name="searchString" placeholder="Nhập sản phẩm cần tìm..." />
+                    <input type="submit" value="Tìm Kiếm"
+                </div>
+            </div>
+        </div>
+    }
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Tên Sản Phẩm</th>
+                <th>Tiêu Đề SEO</th>
+                <th>Trạng Thái</th>
+                <th>Hình Ảnh</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="row_@item.ProductID">
+                    <td>@item.Name</td>
+                    <td>@item.SeoTitle</td>
+                    <td>@item.Status</td>
+                    <td>@item.Image</td>
+                    <td>@item.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Detail</td>
+                    <td>
+                        <a href="~/Admin/Product/Edit/@item.ProductID">Sửa |</a>
+
+                        @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ProductID }, new AjaxOptions
+                   {
+                       Confirm = "Bạn có muốn xóa bản ghi này ?",
+                       OnComplete = "$('#row_" + @item.ProductID + "').remove()",
+                       HttpMethod = "Delete"
+                   })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@Html.PagedListPager(
+Model,
+page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }),
+new PagedListRenderOptions
+{
+   LiElementClasses = new[] { "page-item" },
+   //PageClasses = new[] { "page-link" },
+   UlElementClasses = new[] { "pagination", "justify-content-center" }
+})

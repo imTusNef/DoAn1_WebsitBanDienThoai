@@ -1,0 +1,9 @@
+﻿@model List<WebPhoneStore.EF.CartDetail>
+
+<form class="d-flex me-2">
+    <a class="btn btn-outline-dark" href="/Cart/Index">
+        <i class="bi-cart-fill me-1"></i>
+        Giỏ Hàng
+        <span class="badge bg-dark text-white ms-1 rounded-pill">@Model.Count</span>
+    </a>
+</form>

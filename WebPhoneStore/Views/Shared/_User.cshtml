@@ -1,0 +1,26 @@
+﻿@model WebPhoneStore.EF.User
+@using WebPhoneStore.Common
+
+@{
+    var session = (UserLogin)Session[PhoneStore_Func.USER_SESSION];
+}
+
+@if (session == null)
+{
+    <form class="d-flex" action="@Url.Action("Login", "ClientUser")" method="get">
+        <button class="btn btn-outline-dark" type="submit">
+            <i class="bi-person-fill"></i>
+        </button>
+    </form>
+}
+else
+{
+<form class="d-flex">
+    <a href="@Url.Action("Profile", "ClientUser")" class="btn btn-outline-dark">
+        <i class="fa fa-user"></i> Xin chào: @session.UserName
+    </a>
+    <a href="@Url.Action("MyOrders", "Cart")" class="btn btn-outline-dark ms-2">
+        <i class="fa fa-list"></i> Đơn hàng
+    </a>
+</form>
+}

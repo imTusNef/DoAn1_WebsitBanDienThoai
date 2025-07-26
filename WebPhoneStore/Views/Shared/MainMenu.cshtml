@@ -1,0 +1,16 @@
+﻿@model List<WebPhoneStore.EF.ProductCategory>
+
+<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <li><a class="dropdown-item" href="/trang-chu">All Products</a></li>
+    <li><hr class="dropdown-divider" /></li>
+    @foreach (var item in Model)
+    {
+        var url = "/san-pham/" + item.SeoTitle + "-" + item.CateID;
+        <li><a class="dropdown-item" href="@url">@item.Name</a></li>
+    }
+</ul>
+
+
+
+
+

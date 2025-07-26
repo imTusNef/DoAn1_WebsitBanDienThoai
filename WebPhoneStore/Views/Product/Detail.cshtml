@@ -1,0 +1,70 @@
+﻿@model WebPhoneStore.EF.Product
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listrelatedProduct = (List<WebPhoneStore.EF.Product>)ViewBag.Related;
+}
+
+<div>
+    <!-- Product section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="@Model.Image" alt="@Model.Name" /></div>
+                <div class="col-md-6">
+                    <div class="small mb-1">@Model.CateID</div>
+                    <h1 class="display-5 fw-bolder">@Model.Name</h1>
+                    <div class="fs-5 mb-5">
+                        @*<span class="text-decoration-line-through">$45.00</span>*@
+                        <span class="fw-bold fs-5">Giá sản phẩm: </span><br />
+                        <span class="text-danger fs-3 fw-bold">
+                            @(Model.Price.HasValue?Model.Price.Value.ToString("N0"):"Liên hệ")
+                        </span>
+                        
+                    </div>
+                    <p class="lead">@Html.Raw(Model.Description)</p>
+                    <div class="d-flex">
+                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                        <a class="btn btn-outline-dark flex-shrink-0" href="/them-gio-hang?id=@Model.ProductID&quantity=1" >
+                            <i class="bi-cart-fill me-1"></i>
+                            Thêm vào giỏ hàng
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Related items section-->
+    <section class="py-5 bg-light">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h2 class="fw-bolder mb-4">Related products</h2>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                @foreach (var item in listrelatedProduct)
+                {
+                    var url = "/chi-tiet/" + item.SeoTitle + "-" + item.ProductID;
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <a href="@url"><img class="card-img-top" src="@item.Image" alt="@item.Name" /></a>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">@item.Name</h5>
+                                    <!-- Product price-->
+                                    @(item.Price.HasValue?item.Price.Value.ToString("N0"):"Liên hệ")
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/them-gio-hang?id=@item.ProductID&quantity=1">Thêm giỏ hàng</a></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>
+</div>

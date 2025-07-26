@@ -1,0 +1,100 @@
+﻿@model PagedList.IPagedList<WebPhoneStore.EF.User>
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $(".pagination li a").addClass("page-link");
+        $(".pagination li").addClass("page-item");
+    });
+</script>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Danh Sách User</h1>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Danh Sách</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    @*Form Tìm Kiếm*@
+                    @using (Html.BeginForm("Index", "User", FormMethod.Get))
+                    {
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-md-4">
+                                    <input type="text" value="@ViewBag.SearchString" name="searchString" placeholder="Nhập tên cần tìm..." />
+                                    <input type="submit" value="Tìm Kiếm"
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div>
+
+                    </div>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Tên tài khoản</th>
+                                <th>Họ Tên</th>
+                                <th>Email</th>
+                                <th>Số Điện Thoại</th>
+                                <th>Địa Chỉ</th>
+                                <th>Trạng Thái</th>
+                                <th>Chỉnh Sửa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="row_@item.UserID">
+                                    <td>@item.UserName</td>
+                                    <td>@item.FullName</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Phone</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.Status</td>
+                                    <td>
+                                        <a href="~/Admin/User/Edit/@item.UserID">Sửa |</a>
+                                        @Ajax.ActionLink("Xóa", "Delete", new { @id = item.UserID }, new AjaxOptions
+                                   {
+                                       Confirm = "Bạn có muốn xóa bản ghi này ?",
+                                       OnComplete = "$('#row_" + item.UserID + "').remove()",
+                                       HttpMethod = "Delete"
+                                   })
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+            @Html.PagedListPager(
+            Model,
+            page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }),
+                new PagedListRenderOptions
+                {
+                    LiElementClasses = new[] { "page-item" },
+                    //PageClasses = new[] { "page-link" },
+                    UlElementClasses = new[] { "pagination", "justify-content-center" }
+                })
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
