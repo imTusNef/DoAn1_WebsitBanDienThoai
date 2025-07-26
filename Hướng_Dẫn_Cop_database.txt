@@ -5,3 +5,21 @@
 3. Chọn file `Database_PhoneStore --> PhoneStore.mdf`
 4. Nếu thiếu file log, remove rồi OK
 5. Sau khi attach, database sẽ có tên là `PhoneStore`
+
+# Cấp quyền nếu attach bị lỗi
+Nếu báo lỗi "Permission Denied" khi attach:
+
+Chuột phải vào file .mdf → Properties → Tab Security
+
+Thêm NT SERVICE\MSSQLSERVER hoặc NETWORK SERVICE → Cấp quyền Full Control
+
+# Sửa lại ConnectString
+Vào file Web.config, sửa phần:
+
+<connectionStrings>
+  <add name="PhoneStoreEntities"
+       connectionString="Data Source=.\SQLEXPRESS;Initial Catalog=PhoneStore;Integrated Security=True;" // dòng này
+       providerName="System.Data.SqlClient" />
+</connectionStrings>
+
+tìm dòng trên và copy chuỗi kết nối mời từ dòng Data Source
